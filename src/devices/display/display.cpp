@@ -1,3 +1,4 @@
+#include "display.h"
 #include <Adafruit_SSD1306.h>
 #include <Wire.h>
 
@@ -19,6 +20,6 @@ void display(String text, const uint8_t textSize = 1) {
   oled.cp437(true);
   oled.print(text);
   oled.display();
-  Serial.println("OLED:");
-  Serial.println(text);
+  log("OLED:");
+  log(text);
 }
