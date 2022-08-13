@@ -2,14 +2,8 @@
 #include "devices/http/http.h"
 #include "devices/wifi/wifi.h"
 
-uint32_t reportedAt = -999999;
-
-void reportLoop(SensorsValues values, uint32_t reportInterval) {
-  if (millis() - reportedAt < reportInterval) {
-    return;
-  }
-  reportedAt = millis();
-  log("Reporting");
+void report(SensorsValues values, TechInfo info) {
+  log("Report: Start");
 
   // DynamicJsonDocument payload(150);
   // payload["co2"] = values.co2;
@@ -25,15 +19,13 @@ void reportLoop(SensorsValues values, uint32_t reportInterval) {
   sprintf(payload,
           "{ "
           "\"uptime\": %d,"
-          "\"temperature\": %.1f, "
-          "\"humidity\": %.1f, "
           "\"co2\": %d, "
-          "\"pm1p0\": %d, "
           "\"pm2p5\": %d, "
-          "\"pm10p0\": %d "
+          "\"temperature\": %.1f, "
+          "\"humidity\": %.1f "
           " }",
-          values.uptime, values.temperature, values.humidity, values.co2,
-          values.pm1p0, values.pm2p5, values.pm10p0);
+          millis() / 1000, values.co2, values.pm2p5, values.temperature,
+          values.humidity);
 
   const HTTPResponse postResponse = http(POST, API_URL, 0, payload);
 
@@ -43,5 +35,4 @@ void reportLoop(SensorsValues values, uint32_t reportInterval) {
   } else {
     log("Report: Success");
   }
-  wifiDisconnect();
 }

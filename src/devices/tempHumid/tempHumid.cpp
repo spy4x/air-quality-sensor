@@ -11,25 +11,29 @@ sensors_event_t temperatureEvent;
 sensors_event_t humidityEvent;
 
 void tempHumidSetup() { dht.begin(); }
-void tempHumidRead() {
-  dht.temperature().getEvent(&temperatureEvent);
-  dht.humidity().getEvent(&humidityEvent);
-}
 
 float tempGet() {
+  dht.temperature().getEvent(&temperatureEvent);
   if (isnan(temperatureEvent.temperature)) {
-    log(F("Error reading temperature!"));
+    log(F("tempHumidSensor: Error reading temperature!"));
     return UNSET_INTEGER;
   } else {
+    log(F("tempHumidSensor: Temperature: "), false);
+    log(String(temperatureEvent.temperature), false);
+    log(F(" C"));
     return temperatureEvent.temperature;
   }
 }
 
 float humidGet() {
+  dht.humidity().getEvent(&humidityEvent);
   if (isnan(humidityEvent.relative_humidity)) {
-    log(F("Error reading humidity!"));
+    log(F("tempHumidSensor: Error reading humidity!"));
     return 0;
   } else {
+    log(F("tempHumidSensor: Humidity: "), false);
+    log(String(humidityEvent.relative_humidity), false);
+    log(F(" %"));
     return humidityEvent.relative_humidity;
   }
 }

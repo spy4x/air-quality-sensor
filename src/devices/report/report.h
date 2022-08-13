@@ -4,6 +4,6 @@
 #include "_config.h"
 #include "_shared.h"
 
-void reportLoop(SensorsValues values, uint32_t reportInterval);
+void report(SensorsValues values, TechInfo info);
 
 #endif

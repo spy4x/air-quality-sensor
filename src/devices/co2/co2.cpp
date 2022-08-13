@@ -3,11 +3,7 @@
 #include <MHZ19.h>
 
 MHZ19 co2Sensor;
-#if defined(ESP32)
 HardwareSerial co2SensorSerial = MHZ19E_SERIAL;
-#else
-SoftwareSerial co2SensorSerial(PIN_MHZ19E_RX, PIN_MHZ19E_TX);
-#endif
 
 void co2Setup() {
   co2SensorSerial.begin(SENSORS_BAUDRATE);
@@ -18,8 +14,9 @@ void co2Setup() {
 }
 
 uint16_t co2Get() {
-#if !defined(ESP32)
-  co2SensorSerial.listen();
-#endif
-  return co2Sensor.getCO2();
+  const uint16_t co2 = co2Sensor.getCO2();
+  log("co2Sensor: ", false);
+  log(String(co2), false);
+  log(" ppm");
+  return co2;
 }
