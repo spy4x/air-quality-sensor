@@ -1,17 +1,23 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define VERSION "1.8.1"
+#define VERSION "1.8.3"
+#define DEVICE_NAME "spy4x-aqs"
 
 // -------------------------------- FEATURE FLAGS
 
-#define SHOULD_LOG_TO_SERIAL false
+#define SHOULD_LOG_TO_SERIAL true
 
 // -------------------------------- NETWORK
-#define WIFI_SSID "Keenetic-5221"
+#define WIFI_SSID "spy4x-mobile"
 #define WIFI_PASSWORD "ZyjkeDjW"
+
+// #define WIFI_SSID "Keenetic-5221"
+// #define WIFI_PASSWORD "ZyjkeDjW"
+
 // #define WIFI_SSID "TurkTelekom_ZT29JH_2.4GHz"
 // #define WIFI_PASSWORD "ChHdXu4asPFt"
+
 #define API_URL "https://home.antonshubin.com/api/aqs"
 
 // -------------------------------- PINS - I2C on ESP32: SDA on 21, SCL on 22

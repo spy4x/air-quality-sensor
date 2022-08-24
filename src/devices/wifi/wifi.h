@@ -4,7 +4,8 @@
 #include "_config.h"
 #include "_shared.h"
 
-void wifiConnect(bool shouldWaitForConnect = false);
+void wifiConnect();
+void wifiReconnect();
 void wifiDisconnect();
 bool wifiIsConnected();
 String wifiGetIP();
