@@ -2,12 +2,15 @@
 #include <WiFi.h>
 
 void wifiWaitForConnection();
+void wifiScanForNetworks();
 
 void wifiConnect() {
   if (wifiIsConnected()) {
     log("WiFi is connected.");
     return;
   }
+  wifiScanForNetworks();
+
   WiFi.disconnect();
   WiFi.setHostname(DEVICE_NAME);
 
@@ -16,7 +19,7 @@ void wifiConnect() {
 
   pinMode(PIN_LED_WIFI_STATUS, OUTPUT);
 
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  WiFi.begin(WIFI_SSID);
 
   wifiWaitForConnection();
 }
@@ -26,6 +29,21 @@ void wifiReconnect() {
     log("WiFi connection lost. Reconnecting");
     WiFi.reconnect();
     wifiWaitForConnection();
+  }
+}
+
+void wifiScanForNetworks() {
+  // WiFi.scanNetworks will return the number of networks found
+  int n = WiFi.scanNetworks();
+  if (n == 0) {
+    log("No Wi-Fi networks found");
+  } else {
+    log(String(n) + " Wi-Fi networks found:\n--------------\n");
+    for (int i = 0; i < n; ++i) {
+      // Print SSID and RSSI for each network found
+      log(String(i + 1) + ": " + WiFi.SSID(i) + " (" + WiFi.RSSI(i) + ")");
+      delay(10);
+    }
   }
 }
 

@@ -15,7 +15,7 @@ void co2Setup() {
 
 uint16_t co2Get() {
   const uint16_t co2 = co2Sensor.getCO2();
-  log("co2Sensor: ", false);
+  log("co2: ", false);
   log(String(co2), false);
   log(" ppm");
   return co2;

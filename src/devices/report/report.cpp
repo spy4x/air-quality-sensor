@@ -1,38 +1,46 @@
 #include "report.h"
 #include "devices/http/http.h"
 #include "devices/wifi/wifi.h"
+#include <vector>
+
+uint16_t reportIndex = 0;
 
 void report(SensorsValues values, TechInfo info) {
-  log("Report: Start");
+  static std::vector<SensorsValues> data = {};
+  log(String("Free heap: ") + ESP.getFreeHeap());
+  log(String("Start Report #") + reportIndex++);
+  data.push_back(values);
 
-  // DynamicJsonDocument payload(150);
-  // payload["co2"] = values.co2;
-  // payload["humidity"] = values.humidity;
-  // payload["pm10p0"] = values.pm10p0;
-  // payload["pm1p0"] = values.pm1p0;
-  // payload["pm2p5"] = values.pm2p5;
-  // payload["temperature"] = values.temperature;
-  // payload["uptime"] = values.uptime;
-  // String payloadString;
-  // serializeJson(payload, payloadString);
-  char payload[150];
-  sprintf(payload,
-          "{ "
-          "\"uptime\": %d,"
-          "\"co2\": %d, "
-          "\"pm2p5\": %d, "
-          "\"temperature\": %.1f, "
-          "\"humidity\": %.1f "
-          " }",
-          millis() / 1000, values.co2, values.pm2p5, values.temperature,
-          values.humidity);
+  String payload = "[";
+  for (uint16_t i = 0; i < data.size(); i++) {
+    if (i > 0) {
+      payload += ',';
+    }
+    SensorsValues item = data.at(i);
+    char itemString[100];
+    sprintf(itemString,
+            "{"
+            "\"u\":%d,"
+            "\"c\":%d,"
+            "\"p1p0\":%d,"
+            "\"p2p5\":%d,"
+            "\"p10p0\":%d,"
+            "\"t\":%.1f,"
+            "\"h\":%.1f"
+            "}",
+            item.uptime, item.co2, item.pm1p0, item.pm2p5, item.pm10p0,
+            item.temperature, item.humidity);
+    payload += itemString;
+  }
+  payload += ']';
 
   const HTTPResponse postResponse = http(POST, API_URL, 0, payload);
 
   if (!postResponse.isSuccess) {
-    log(String("Report: Failed") + postResponse.status + " " +
+    log(String("Report: Failed") + " " + postResponse.status + " " +
         postResponse.error);
   } else {
     log("Report: Success");
+    data.clear();
   }
 }

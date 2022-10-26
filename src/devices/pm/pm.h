@@ -7,6 +7,9 @@
 void pmSetup();
 void pmSleep();
 void pmWakeUp();
-uint16_t pmGet();
+void pmRead();
+uint16_t pmGet1p0();
+uint16_t pmGet2p5();
+uint16_t pmGet10p0();
 
 #endif

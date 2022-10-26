@@ -28,7 +28,6 @@ void setup() {
 
 void loop() {
   if (loopSensors()) {
-    wifiReconnect();
     info.wifiIsConnected = wifiIsConnected();
     info.wifiSignal = wifiGetSignal();
     info.wifiSSID = wifiGetSSID();
@@ -64,8 +63,12 @@ bool loopSensors() {
 
   if (READY == info.sensorsState) {
     log("Reading all sensors");
+    values.uptime = millis() / 1000;
     values.co2 = co2Get();
-    values.pm2p5 = pmGet();
+    pmRead();
+    values.pm1p0 = pmGet1p0();
+    values.pm2p5 = pmGet2p5();
+    values.pm10p0 = pmGet10p0();
     values.temperature = tempGet();
     values.humidity = humidGet();
     info.lastSensorsReadAt = now;

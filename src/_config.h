@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define VERSION "1.8.3"
+#define VERSION "1.9.0"
 #define DEVICE_NAME "spy4x-aqs"
 
 // -------------------------------- FEATURE FLAGS
@@ -9,14 +9,15 @@
 #define SHOULD_LOG_TO_SERIAL true
 
 // -------------------------------- NETWORK
-#define WIFI_SSID "spy4x-mobile"
-#define WIFI_PASSWORD "ZyjkeDjW"
 
-// #define WIFI_SSID "Keenetic-5221"
-// #define WIFI_PASSWORD "ZyjkeDjW"
+// #define WIFI_SSID "Eirene-iPhone"
+// #define WIFI_PASSWORD "Danger1234"
 
-// #define WIFI_SSID "TurkTelekom_ZT29JH_2.4GHz"
-// #define WIFI_PASSWORD "ChHdXu4asPFt"
+#define WIFI_SSID "BaliBustle"
+#define WIFI_PASSWORD ""
+
+// #define WIFI_SSID "spy4x-mobile"
+// #define WIFI_PASSWORD "Danger1234"
 
 #define API_URL "https://home.antonshubin.com/api/aqs"
 
