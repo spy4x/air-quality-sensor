@@ -11,7 +11,10 @@ void report(SensorsValues values, TechInfo info) {
   log(String("Start Report #") + reportIndex++);
   data.push_back(values);
 
-  String payload = "[";
+  String payload = "";
+  payload += "{\"u\":";
+  payload += (millis() / 1000);
+  payload += +", \"d\":[";
   for (uint16_t i = 0; i < data.size(); i++) {
     if (i > 0) {
       payload += ',';
@@ -22,9 +25,9 @@ void report(SensorsValues values, TechInfo info) {
             "{"
             "\"u\":%d,"
             "\"c\":%d,"
-            "\"p1p0\":%d,"
-            "\"p2p5\":%d,"
-            "\"p10p0\":%d,"
+            "\"pm1p0\":%d,"
+            "\"pm2p5\":%d,"
+            "\"pm10p0\":%d,"
             "\"t\":%.1f,"
             "\"h\":%.1f"
             "}",
@@ -32,7 +35,7 @@ void report(SensorsValues values, TechInfo info) {
             item.temperature, item.humidity);
     payload += itemString;
   }
-  payload += ']';
+  payload += "]}";
 
   const HTTPResponse postResponse = http(POST, API_URL, 0, payload);
 

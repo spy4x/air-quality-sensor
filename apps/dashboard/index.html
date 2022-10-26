@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Air Quality Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/9.9.1/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <!--    <script defer src="/__/firebase/9.9.1/firebase-auth-compat.js"></script>-->
+    <!--    <script defer src="/__/firebase/9.9.1/firebase-database-compat.js"></script>-->
+    <script defer src="/__/firebase/9.9.1/firebase-firestore-compat.js"></script>
+    <!--    <script defer src="/__/firebase/9.9.1/firebase-functions-compat.js"></script>-->
+    <script defer src="/__/firebase/9.9.1/firebase-messaging-compat.js"></script>
+    <!--    <script defer src="/__/firebase/9.9.1/firebase-storage-compat.js"></script>-->
+    <!--    <script defer src="/__/firebase/9.9.1/firebase-analytics-compat.js"></script>-->
+    <!--    <script defer src="/__/firebase/9.9.1/firebase-remote-config-compat.js"></script>-->
+    <!--    <script defer src="/__/firebase/9.9.1/firebase-performance-compat.js"></script>-->
+    <!--
+    initialize the SDK after all desired features are loaded, set useEmulator to false
+    to avoid connecting the SDK to running emulators.
+  -->
+    <!--    <script defer src="/__/firebase/init.js?useEmulator=true"></script>-->
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <!--    <script defer src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>-->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0/dist/chartjs-adapter-moment.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@2.0.0/dist/chartjs-plugin-annotation.min.js"
+    ></script>
+
+    <link href="/style.css?v11" rel="stylesheet" />
+    <script defer src="/script.js?v13"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div style="display: flex; align-items: center; gap: 1rem; justify-content: center">
+        <h1 class="title">Air Quality</h1>
+        <button
+          type="button"
+          id="subscribeToNotificationsButton"
+          onclick="subscribeToNotifications(event)"
+          title="Subscribe for notifications"
+          style="display: none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="content feather feather-bell"
+          >
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="loader feather feather-loader"
+            style="display: none"
+          >
+            <line x1="12" y1="2" x2="12" y2="6" />
+            <line x1="12" y1="18" x2="12" y2="22" />
+            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
+            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
+            <line x1="2" y1="12" x2="6" y2="12" />
+            <line x1="18" y1="12" x2="22" y2="12" />
+            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
+            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          id="unsubscribeFromNotificationsButton"
+          onclick="unsubscribeFromNotifications(event)"
+          title="Unsubscribe from notifications"
+          class="secondary"
+          style="display: none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="content feather feather-bell-off"
+          >
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+            <path d="M18.63 13A17.89 17.89 0 0 1 18 8" />
+            <path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14" />
+            <path d="M18 8a6 6 0 0 0-9.33-5" />
+            <line x1="1" y1="1" x2="23" y2="23" />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="loader feather feather-loader"
+            style="display: none"
+          >
+            <line x1="12" y1="2" x2="12" y2="6" />
+            <line x1="12" y1="18" x2="12" y2="22" />
+            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
+            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
+            <line x1="2" y1="12" x2="6" y2="12" />
+            <line x1="18" y1="12" x2="22" y2="12" />
+            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
+            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
+          </svg>
+        </button>
+      </div>
+      <h5 class="subtitle" id="lastUpdatedAgo"></h5>
+
+      <div id="filters">
+        <button onclick="filterRecent(1)" data-filter-id="1">1h</button>
+        <button onclick="filterRecent(3)" data-filter-id="3">3h</button>
+        <button onclick="filterRecent(6)" data-filter-id="6">6h</button>
+        <button onclick="filterRecent(12)" data-filter-id="12">12h</button>
+        <button onclick="filterRecent(24)" data-filter-id="24">24h</button>
+        <!--        <button onclick="filterRecent(48)" data-filter-id="48">2d</button>-->
+        <!--        <button onclick="filterRecent(72)" data-filter-id="72">3d</button>-->
+        <!--        <button onclick="filterRecent(168)" data-filter-id="168">7d</button>-->
+        <!--        <button onclick="filterRecent(720)" data-filter-id="720">30d</button>-->
+        <!--        <button onclick="filterRecent(2160)" data-filter-id="2160">90d</button>-->
+        <!--        <button onclick="filterRecent(21900)" data-filter-id="21900">1y</button>-->
+      </div>
+      <div id="charts"></div>
+    </div>
+  </body>
+</html>

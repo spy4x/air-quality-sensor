@@ -1,0 +1,70 @@
+{
+  "functions": {
+    "predeploy": [
+      "yarn build:functions"
+    ],
+    "source": "apps/backend"
+  },
+  "emulators": {
+    "functions": {
+      "port": 5001,
+      "host": "0.0.0.0"
+    },
+    "hosting": {
+      "port": 5000,
+      "host": "0.0.0.0"
+    },
+    "ui": {
+      "enabled": true
+    }
+  },
+  "hosting": [
+    {
+      "target": "home-antonshubin",
+      "public": "apps/dashboard",
+      "predeploy": [
+        "yarn firebase target:apply hosting home-antonshubin home-antonshubin --project $FIREBASE_PROJECT"
+      ],
+      "cleanUrls": true,
+      "rewrites": [
+        {
+          "source": "/api/aqs/push-notifications",
+          "function": "aqsPushNotifications"
+        },
+        {
+          "source": "/api/aqs",
+          "function": "aqs"
+        }
+      ],
+      "headers": [
+        {
+          "source": "/api{,/**}",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "no-store"
+            }
+          ]
+        },
+        {
+          "source": "**/*.@(html|js|css|webp|jpg|jpeg|gif|png|svg|ico|eot|ttf|woff|woff2|txt)",
+          "headers": [
+            {
+              "key": "Cache-Control",
+              "value": "max-age=31536000"
+            },
+            {
+              "key": "Content-Encoding",
+              "value": "br"
+            }
+          ]
+        }
+      ],
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    }
+  ]
+}

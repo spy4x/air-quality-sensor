@@ -1,0 +1,17 @@
+{
+  "name": "air-quality-sensor",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "yarn emulator:kill && firebase emulators:start",
+    "deploy": "firebase deploy",
+    "build:functions": "yarn --cwd apps/backend build",
+    "emulator:kill": "lsof -t -i :5001 -i:5002 -i:8080 | xargs kill -9",
+    "postinstall": "yarn --cwd apps/backend install --frozen-lockfile --non-interactive"
+  },
+  "devDependencies": {
+    "firebase-tools": "^11.4.2",
+    "prettier": "^2.7.1"
+  }
+}

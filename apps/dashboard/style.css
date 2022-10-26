@@ -1,0 +1,95 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  margin: 0;
+}
+
+.subtitle {
+  text-align: center;
+  color: grey;
+  margin-top: 0;
+}
+
+button {
+  border: 0;
+  background: #7676e7;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+button > .loader {
+  animation: spin 2s linear infinite;
+}
+button.secondary {
+  background: #7b7b7e;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+#filters > button {
+  border-radius: 0;
+  border-right: 1px solid #333;
+  padding: 10px 20px;
+}
+#filters > button:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+#filters > button:last-child {
+  border-right: 0;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+#filters > button.active {
+  background: #5454ab;
+}
+
+#charts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 3rem;
+}
+#charts > .chart > .chart__title {
+  text-align: center;
+}
+#charts > .chart > .chart__title > .chart__title__value-wrapper {
+  padding: 4px 10px;
+  text-align: center;
+  border-radius: 8px;
+  flex: 0 0 100px;
+  color: white;
+  font-weight: normal;
+}
+#charts > .chart > .chart__title > .chart__title__value-wrapper > .chart__title__unit {
+  font-size: 1rem;
+}
+#charts > .chart > canvas {
+  max-width: 350px;
+  max-height: 350px;
+}

@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "antonshubin-production"
+  },
+  "targets": {
+    "antonshubin-production": {
+      "hosting": {
+        "home-antonshubin": [
+          "home-antonshubin"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
