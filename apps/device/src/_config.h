@@ -1,7 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define VERSION "1.9.0"
+#define VERSION "1.9.1"
 #define DEVICE_NAME "spy4x-aqs"
 
 // -------------------------------- FEATURE FLAGS

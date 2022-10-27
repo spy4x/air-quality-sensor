@@ -1,26 +1,35 @@
 #include "report.h"
 #include "devices/http/http.h"
 #include "devices/wifi/wifi.h"
+#include <memory>
 #include <vector>
 
-uint16_t reportIndex = 0;
+typedef std::vector<SensorsValues> SensorsValuesVector;
 
 void report(SensorsValues values, TechInfo info) {
-  static std::vector<SensorsValues> data = {};
+  static uint32_t reportIndex = 0;
   log(String("Free heap: ") + ESP.getFreeHeap());
   log(String("Start Report #") + reportIndex++);
-  data.push_back(values);
 
+  static std::shared_ptr<SensorsValuesVector> vectorPtr = nullptr;
+  if (vectorPtr == nullptr) {
+    // Allocate memory
+    vectorPtr = std::make_shared<SensorsValuesVector>();
+  }
+  auto &data = *vectorPtr; // Link to data
+  data.push_back(values);  // Add data to vector
+
+  // Build JSON
   String payload = "";
   payload += "{\"u\":";
   payload += (millis() / 1000);
   payload += +", \"d\":[";
-  for (uint16_t i = 0; i < data.size(); i++) {
+  for (size_t i = 0; i < data.size(); i++) {
     if (i > 0) {
       payload += ',';
     }
-    SensorsValues item = data.at(i);
-    char itemString[100];
+    SensorsValues item = data[i];
+    char itemString[256];
     sprintf(itemString,
             "{"
             "\"u\":%d,"
@@ -37,13 +46,14 @@ void report(SensorsValues values, TechInfo info) {
   }
   payload += "]}";
 
+  // Send data to server
   const HTTPResponse postResponse = http(POST, API_URL, 0, payload);
 
-  if (!postResponse.isSuccess) {
+  if (postResponse.isSuccess) {
+    log("Report: Success");
+    vectorPtr.reset(); // Free memory
+  } else {
     log(String("Report: Failed") + " " + postResponse.status + " " +
         postResponse.error);
-  } else {
-    log("Report: Success");
-    data.clear();
   }
 }
