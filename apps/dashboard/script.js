@@ -57,14 +57,15 @@ const models = [
     field: 'h',
     color: 'blue',
     unit: '%',
-    yMin: 0,
-    yMax: 100,
+    yMin: 25,
+    yMax: 70,
     references: [
       {
         title: 'Too humid',
         color: colorCodes.BAD,
         max: 100,
         min: 70,
+        placement: 'end',
       },
       {
         title: 'Moderate',
@@ -89,6 +90,7 @@ const models = [
         color: colorCodes.BAD,
         max: 25,
         min: 0,
+        placement: 'start',
       },
     ],
     chart: undefined,
@@ -100,7 +102,7 @@ const models = [
     fieldTitle: 'CO2',
     color: 'rgb(75, 192, 192)',
     yMin: 400,
-    yMax: 2000,
+    yMax: 1200,
     unit: 'ppm',
     references: [
       {
@@ -108,12 +110,14 @@ const models = [
         color: colorCodes.VERY_BAD,
         max: 2000,
         min: 1500,
+        placement: 'end',
       },
       {
         title: 'Low productivity, Laziness',
         color: colorCodes.BAD,
         max: 1500,
         min: 1200,
+        placement: 'end',
       },
       {
         title: 'Time to refresh air',
@@ -137,7 +141,7 @@ const models = [
     fieldTitle: 'PM 1.0',
     color: 'orange',
     yMin: 0,
-    yMax: 100,
+    yMax: 35,
     unit: 'μg/m3',
     references: [
       {
@@ -152,12 +156,14 @@ const models = [
         color: colorCodes.VERY_BAD,
         max: 100,
         min: 55,
+        placement: 'end',
       },
       {
         title: 'Unhealthy',
         color: colorCodes.BAD,
         max: 55,
         min: 35,
+        placement: 'end',
       },
       {
         title: 'Moderate',
@@ -181,7 +187,7 @@ const models = [
     fieldTitle: 'PM 2.5',
     color: 'orange',
     yMin: 0,
-    yMax: 100,
+    yMax: 35,
     unit: 'μg/m3',
     references: [
       {
@@ -196,12 +202,14 @@ const models = [
         color: colorCodes.VERY_BAD,
         max: 100,
         min: 55,
+        placement: 'end',
       },
       {
         title: 'Unhealthy',
         color: colorCodes.BAD,
         max: 55,
         min: 35,
+        placement: 'end',
       },
       {
         title: 'Moderate',
@@ -225,7 +233,7 @@ const models = [
     fieldTitle: 'PM 10',
     color: 'orange',
     yMin: 0,
-    yMax: 300,
+    yMax: 80,
     unit: 'μg/m3',
     references: [
       {
@@ -240,12 +248,14 @@ const models = [
         color: colorCodes.VERY_BAD,
         max: 300,
         min: 120,
+        placement: 'end',
       },
       {
         title: 'Unhealthy',
         color: colorCodes.BAD,
         max: 120,
         min: 80,
+        placement: 'end',
       },
       {
         title: 'Moderate',

@@ -85,6 +85,7 @@ button.secondary {
   flex: 0 0 100px;
   color: white;
   font-weight: normal;
+  margin-left: .5rem;
 }
 #charts > .chart > .chart__title > .chart__title__value-wrapper > .chart__title__unit {
   font-size: 1rem;
