@@ -4,18 +4,32 @@
 void wifiWaitForConnection();
 void wifiScanForNetworks();
 
+void IRAM_ATTR WiFiEvent(WiFiEvent_t event) {
+  switch (event) {
+  case SYSTEM_EVENT_STA_CONNECTED:
+    log("Connected to WiFi");
+    break;
+  case SYSTEM_EVENT_STA_DISCONNECTED:
+    log("Disconnected from WiFi");
+    break;
+  default:
+    break;
+  }
+}
+
 void wifiConnect() {
   wifiScanForNetworks();
 
   WiFi.disconnect();
   WiFi.setHostname(DEVICE_NAME);
+  WiFi.onEvent(WiFiEvent);
 
   log("Connecting to WiFi: ", false);
   log(WIFI_SSID);
 
   pinMode(PIN_LED_WIFI_STATUS, OUTPUT);
 
-  WiFi.begin(WIFI_SSID);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
 
   // wifiWaitForConnection();
 }
