@@ -292,7 +292,7 @@ let db, messaging, latestEntry, unsubscribeFromReatimeUpdates, activeFilterId;
 document.addEventListener('DOMContentLoaded', async function () {
   buildCharts();
   initFirebase();
-  filterRecent(3);
+  filterRecent(1);
   setInterval(updateLastUpdatedAgoText, 1000);
   initPushNotifications();
 });

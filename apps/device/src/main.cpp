@@ -28,6 +28,7 @@ void setup() {
 
 void loop() {
   if (loopSensors()) {
+    // wifiReconnect();
     info.wifiIsConnected = wifiIsConnected();
     info.wifiSignal = wifiGetSignal();
     info.wifiSSID = wifiGetSSID();

@@ -18,6 +18,7 @@ void IRAM_ATTR WiFiEvent(WiFiEvent_t event) {
 }
 
 void wifiConnect() {
+  WiFi.mode(WIFI_MODE_STA);
   wifiScanForNetworks();
 
   WiFi.disconnect();
@@ -38,7 +39,7 @@ void wifiReconnect() {
   if (!wifiIsConnected()) {
     log("WiFi connection lost. Reconnecting");
     WiFi.reconnect();
-    wifiWaitForConnection();
+    // wifiWaitForConnection();
   }
 }
 

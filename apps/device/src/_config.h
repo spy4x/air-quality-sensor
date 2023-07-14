@@ -13,11 +13,14 @@
 // #define WIFI_SSID "Eirene-iPhone"
 // #define WIFI_PASSWORD "Danger1234"
 
-#define WIFI_SSID "BaliBustle"
-#define WIFI_PASSWORD ""
+// #define WIFI_SSID "CozyHome 2.4G"
+// #define WIFI_PASSWORD "WYC95555"
 
 // #define WIFI_SSID "spy4x-mobile"
 // #define WIFI_PASSWORD "Danger1234"
+
+#define WIFI_SSID "TP-Link_B0E4"
+#define WIFI_PASSWORD "pepperpots"
 
 #define API_URL "https://home.antonshubin.com/api/aqs"
 

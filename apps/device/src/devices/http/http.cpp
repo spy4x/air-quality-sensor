@@ -8,7 +8,7 @@ static const char *HTTPMethodString[] = {"GET", "POST", "PATCH", "DELETE"};
 HTTPResponse http(HTTPMethod method, String url, int responseBodySize,
                   String payload) {
   // configure stuff
-  const int timeout = 5000;
+  const int timeout = 10000;
   HTTPClient client;
   client.setReuse(false);
   client.setConnectTimeout(timeout);
@@ -33,6 +33,7 @@ HTTPResponse http(HTTPMethod method, String url, int responseBodySize,
   // make request
   client.addHeader("Content-Type", "application/json");
   response.status = client.sendRequest(HTTPMethodString[method], payload);
+  // client.end();
   log(logPrefix + " " + response.status);
   response.isSuccess = response.status >= 200 && response.status < 300;
 
