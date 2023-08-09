@@ -1,8 +1,8 @@
 {
   "functions": {
-    "predeploy": [
-      "yarn build:functions"
-    ],
+    // "predeploy": [
+    //   "yarn build:functions"
+    // ],
     "source": "apps/backend"
   },
   "emulators": {
@@ -22,9 +22,7 @@
     {
       "target": "home-antonshubin",
       "public": "apps/dashboard",
-      "predeploy": [
-        "yarn firebase target:apply hosting home-antonshubin home-antonshubin --project $FIREBASE_PROJECT"
-      ],
+      "predeploy": ["yarn firebase target:apply hosting home-antonshubin home-antonshubin --project $FIREBASE_PROJECT"],
       "cleanUrls": true,
       "rewrites": [
         {
@@ -33,6 +31,10 @@
         },
         {
           "source": "/api/aqs",
+          "function": "aqs"
+        },
+        {
+          "source": "/api/aqs/ping",
           "function": "aqs"
         }
       ],
@@ -60,11 +62,7 @@
           ]
         }
       ],
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ]
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
     }
   ]
 }

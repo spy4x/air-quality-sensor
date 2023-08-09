@@ -11,7 +11,7 @@
     "postinstall": "yarn --cwd apps/backend install --frozen-lockfile --non-interactive"
   },
   "devDependencies": {
-    "firebase-tools": "^11.4.2",
+    "firebase-tools": "^12.4.5",
     "prettier": "^2.7.1"
   }
 }
