@@ -1,15 +1,30 @@
-.pio
-apps/device/.vscode/.browse.c_cpp.db*
-apps/device/.vscode/c_cpp_properties.json
-apps/device/.vscode/launch.json
-apps/device/.vscode/ipch
-*.log
-dist/
-.firebase/
-.parcel-cache/
-coverage/
-node_modules/
-.env*
-.runtimeconfig.json
-.idea/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+.pnp
+.pnp.js
+
+# testing
+coverage
+
+# svelte
+.svelte-kit
+
+# misc
 .DS_Store
+*.pem
+.idea
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env
+.env.prod
+# turbo
+.turbo
+
+.volumes

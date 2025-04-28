@@ -1,0 +1,17 @@
+version: '3.8'
+
+name: aqs
+
+services:
+  aqs-db:
+    container_name: aqs-db
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: aqs-api
+      POSTGRES_PASSWORD: localPassword
+      POSTGRES_DB: aqs
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.volumes/postgres:/var/lib/postgresql/data

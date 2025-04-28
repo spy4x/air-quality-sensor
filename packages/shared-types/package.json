@@ -1,0 +1,17 @@
+{
+  "name": "@repo/shared-types",
+  "version": "0.0.0",
+  "type": "module",
+  "module": "index.ts",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*"
+  }
+}

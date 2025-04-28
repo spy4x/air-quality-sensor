@@ -1,17 +1,23 @@
 {
-  "name": "air-quality-sensor",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
+  "private": true,
   "scripts": {
-    "start": "yarn emulator:kill && firebase emulators:start",
-    "deploy": "firebase deploy",
-    "build:functions": "yarn --cwd apps/backend build",
-    "emulator:kill": "lsof -t -i :5001 -i:5002 -i:8080 | xargs kill -9",
-    "postinstall": "yarn --cwd apps/backend install --frozen-lockfile --non-interactive"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write .",
+    "prod:deploy": "pnpm prod:deploy:copy && pnpm prod:deploy:run",
+    "prod:deploy:copy": "rsync -avz -e 'ssh' . homelab:~/apps/aqs --include-from='prod.deploy.files.txt' --exclude '*'",
+    "prod:deploy:run": "ssh homelab 'cd apps/aqs && docker compose -f prod.compose.yml build && docker compose --env-file=.env.prod --env-file=../.env -f prod.compose.yml down && docker compose --env-file=.env.prod --env-file=../.env -f prod.compose.yml up -d'"
   },
   "devDependencies": {
-    "firebase-tools": "^12.4.5",
-    "prettier": "^2.7.1"
+    "eslint": "^8.57.0",
+    "@repo/eslint-config": "workspace:*",
+    "prettier": "^3.2.5",
+    "prettier-plugin-svelte": "^3.2.2",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@8.9.0",
+  "engines": {
+    "node": ">=18"
   }
 }

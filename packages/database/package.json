@@ -1,0 +1,22 @@
+{
+  "name": "@repo/db",
+  "version": "0.0.0",
+  "type": "module",
+  "module": "index.ts",
+  "main": "index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "migrate": "tsx ./migrate.ts",
+    "purge": "tsx ./purge.ts"
+  },
+  "dependencies": {
+    "@repo/shared-types": "workspace:*",
+    "dotenv": "^16.4.5",
+    "postgres": "^3.4.3"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@types/node": "^20.11.30",
+    "tsx": "^4.7.1"
+  }
+}

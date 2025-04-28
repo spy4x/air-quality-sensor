@@ -1,0 +1,72 @@
+version: '3.8'
+
+name: aqs
+
+networks:
+  proxy:
+    external: true
+
+services:
+  aqs-app:
+    container_name: aqs-app
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    restart: unless-stopped
+    networks:
+      - proxy
+      - default
+    env_file:
+      - .env.prod
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    depends_on:
+      aqs-db:
+        condition: service_healthy
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - 'traefik.enable=true'
+      - "traefik.docker.network=proxy"
+      - 'traefik.http.routers.aqs-app.rule=Host(`home.antonshubin.com`) || Host(`aqs.antonshubin.com`)'
+      - 'traefik.http.routers.aqs-app.entrypoints=websecure'
+      - 'traefik.http.routers.aqs-app.tls=true'
+      - 'traefik.http.routers.aqs-app.tls.certresolver=myresolver'
+      - 'traefik.http.services.aqs-app.loadbalancer.server.port=3000'
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+  aqs-db:
+    container_name: aqs-db
+    image: postgres:15-alpine
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
+    environment:
+      - PGUSER=${DB_USER}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - 5432:5432
+    volumes:
+      - ../.volumes/aqs/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", '-d', '${DB_NAME}', '-U', '${DB_USER}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
