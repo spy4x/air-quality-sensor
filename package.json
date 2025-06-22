@@ -6,8 +6,8 @@
     "lint": "turbo run lint",
     "format": "prettier --write .",
     "prod:deploy": "pnpm prod:deploy:copy && pnpm prod:deploy:run",
-    "prod:deploy:copy": "rsync -avz -e 'ssh' . homelab:~/apps/aqs --include-from='prod.deploy.files.txt' --exclude '*'",
-    "prod:deploy:run": "ssh homelab 'cd apps/aqs && docker compose -f prod.compose.yml build && docker compose --env-file=.env.prod --env-file=../.env -f prod.compose.yml down && docker compose --env-file=.env.prod --env-file=../.env -f prod.compose.yml up -d'"
+    "prod:deploy:copy": "rsync -avz -e 'ssh' . spy4x-server-external:~/ssd-2tb/apps/aqs --include-from='prod.deploy.files.txt' --exclude '*'",
+    "prod:deploy:run": "ssh spy4x-server-external 'cd ssd-2tb/apps/aqs && docker compose -f prod.compose.yml build && docker compose --env-file=.env.prod --env-file=../.env -f prod.compose.yml down && docker compose --env-file=.env.prod --env-file=../.env -f prod.compose.yml up -d'"
   },
   "devDependencies": {
     "eslint": "^8.57.0",

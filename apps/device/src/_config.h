@@ -22,7 +22,7 @@
 #define WIFI_SSID "TP-Link_B0E4"
 #define WIFI_PASSWORD "pepperpots"
 
-#define API_URL "https://home.antonshubin.com/api/aqs"
+#define API_URL "https://aqs.antonshubin.com/api/aqs"
 
 // -------------------------------- PINS - I2C on ESP32: SDA on 21, SCL on 22
 

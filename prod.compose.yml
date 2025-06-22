@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 name: aqs
 
@@ -21,7 +21,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
     depends_on:
       aqs-db:
@@ -29,18 +29,18 @@ services:
     security_opt:
       - no-new-privileges:true
     labels:
-      - 'traefik.enable=true'
+      - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      - 'traefik.http.routers.aqs-app.rule=Host(`home.antonshubin.com`) || Host(`aqs.antonshubin.com`)'
-      - 'traefik.http.routers.aqs-app.entrypoints=websecure'
-      - 'traefik.http.routers.aqs-app.tls=true'
-      - 'traefik.http.routers.aqs-app.tls.certresolver=myresolver'
-      - 'traefik.http.services.aqs-app.loadbalancer.server.port=3000'
+      - "traefik.http.routers.aqs-app.rule=Host(`aqs.antonshubin.com`)"
+      - "traefik.http.routers.aqs-app.entrypoints=websecure"
+      - "traefik.http.routers.aqs-app.tls=true"
+      - "traefik.http.routers.aqs-app.tls.certresolver=myresolver"
+      - "traefik.http.services.aqs-app.loadbalancer.server.port=3000"
     logging:
       driver: json-file
       options:
-        max-size: '10m'
-        max-file: '3'
+        max-size: "10m"
+        max-file: "3"
 
   aqs-db:
     container_name: aqs-db
@@ -49,7 +49,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.25'
+          cpus: "0.25"
           memory: 512M
     environment:
       - PGUSER=${DB_USER}
@@ -61,12 +61,12 @@ services:
     volumes:
       - ../.volumes/aqs/postgres:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready", '-d', '${DB_NAME}', '-U', '${DB_USER}']
+      test: ["CMD", "pg_isready", "-d", "${DB_NAME}", "-U", "${DB_USER}"]
       interval: 10s
       timeout: 5s
       retries: 5
     logging:
       driver: json-file
       options:
-        max-size: '10m'
-        max-file: '3'
+        max-size: "10m"
+        max-file: "3"

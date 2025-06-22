@@ -18,6 +18,10 @@ export const db = {
     findMany: async (hours: number): Promise<Measurement[]> => {
       const createdAtGt = new Date(Date.now() - hours * 60 * 60 * 1000);
       return await sql`SELECT * FROM measurements WHERE created_at > ${createdAtGt} ORDER BY created_at ASC`;
+    },
+    findLatest: async (): Promise<Measurement | null> => {
+      const result = await sql`SELECT * FROM measurements ORDER BY created_at DESC LIMIT 1`;
+      return result[0] || null;
     }
   }
 };
