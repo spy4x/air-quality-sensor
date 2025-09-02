@@ -54,7 +54,7 @@ void loop() {
     pmSleep();
     // Calculate sleep duration (REPORT_INTERVAL_MS)
     esp_sleep_enable_timer_wakeup(REPORT_INTERVAL_MS * 1000ULL); // ms to us
-    log("Entering deep sleep for next reading");
+    log("Entering deep sleep for next reading (" + String(REPORT_INTERVAL_MS / 1000) + " seconds)");
     esp_deep_sleep_start();
     // Device will reset after deep sleep, so no code below will run
   }

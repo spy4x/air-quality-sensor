@@ -7,26 +7,33 @@
 typedef std::vector<SensorsValues> SensorsValuesVector;
 
 void report(SensorsValues values, TechInfo info) {
-  static uint32_t reportIndex = 0;
-  log(String("Free heap: ") + ESP.getFreeHeap());
-  log(String("Start Report #") + reportIndex++);
-    // Connect WiFi for reporting
-    wifiConnect();
-    wifiWaitForConnection();
 
-  static std::shared_ptr<SensorsValuesVector> vectorPtr = nullptr;
-  if (vectorPtr == nullptr) {
-    // Allocate memory
-    vectorPtr = std::make_shared<SensorsValuesVector>();
+  static uint32_t reportIndex = 0;
+  log(String("Start Report #") + reportIndex++);
+
+  // Connect WiFi for reporting with timeout
+  wifiConnect();
+  unsigned long wifiStart = millis();
+  const unsigned long wifiTimeout = 10000; // 10 seconds
+  while (!wifiIsConnected()) {
+    if (millis() - wifiStart > wifiTimeout) {
+      log("WiFi connection timeout. Aborting report and powering off WiFi...");
+      wifiPowerOff();
+      return;
+    }
+    delay(100);
   }
-  auto &data = *vectorPtr; // Link to data
-  data.push_back(values);  // Add data to vector
+
+  // Prepare data for reporting
+  SensorsValuesVector data;
+  data.push_back(values);
+
 
   // Build JSON
   String payload = "";
   payload += "{\"u\":";
   payload += (millis() / 1000);
-  payload += +", \"d\":[";
+  payload += ", \"d\":[";
   for (size_t i = 0; i < data.size(); i++) {
     if (i > 0) {
       payload += ',';
@@ -54,11 +61,11 @@ void report(SensorsValues values, TechInfo info) {
 
   if (postResponse.isSuccess) {
     log("Report: Success");
-    vectorPtr.reset(); // Free memory
   } else {
-    log(String("Report: Failed") + " " + postResponse.status + " " +
-        postResponse.error);
-  }
-    // Power off WiFi after reporting
+    log(String("Report: Failed") + " " + postResponse.status + " " + postResponse.error);
     wifiPowerOff();
+    return;
+  }
+  // Power off WiFi after reporting
+  wifiPowerOff();
 }
