@@ -18,18 +18,7 @@ TechInfo info;
 bool loopSensors();
 
 void setup() {
-  // Set CPU frequency to 80MHz for power saving
-  if (setCpuFrequencyMhz(80)) {
-    Serial.begin(115200);
-    Serial.println("CPU frequency set to 80 MHz");
-  } else {
-    Serial.begin(115200);
-    Serial.println("Failed to set CPU frequency. Defaulting to original speed.");
-  }
-  Serial.print("Current CPU frequency: ");
-  Serial.print(getCpuFrequencyMhz());
-  Serial.println(" MHz");
-
+  setCpuFrequencyMhz(80); // Reduce CPU frequency to save power
   loggerSetup();
   log("\n\n\nSetting sensors up...");
   pmSetup();
