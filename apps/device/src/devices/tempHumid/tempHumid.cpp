@@ -16,7 +16,7 @@ float tempGet() {
   dht.temperature().getEvent(&temperatureEvent);
   if (isnan(temperatureEvent.temperature)) {
     log(F("t: Error"));
-    return UNSET_INTEGER;
+    return UNSET_TEMPERATURE;
   } else {
     log(F("t: "), false);
     log(String(temperatureEvent.temperature), false);
@@ -29,7 +29,7 @@ float humidGet() {
   dht.humidity().getEvent(&humidityEvent);
   if (isnan(humidityEvent.relative_humidity)) {
     log(F("h: Error"));
-    return 0;
+  return UNSET_INTEGER;
   } else {
     log(F("h: "), false);
     log(String(humidityEvent.relative_humidity), false);

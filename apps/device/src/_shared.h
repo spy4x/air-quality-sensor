@@ -6,15 +6,16 @@
 
 enum SensorsState { SLEEPING, WAKING_UP, READY };
 
-#define UNSET_INTEGER 0
+#define UNSET_INTEGER -1
+#define UNSET_TEMPERATURE -273
 
 struct SensorsValues {
-  uint32_t uptime = UNSET_INTEGER;
-  uint16_t co2 = UNSET_INTEGER;
-  uint16_t pm1p0 = UNSET_INTEGER;
-  uint16_t pm2p5 = UNSET_INTEGER;
-  uint16_t pm10p0 = UNSET_INTEGER;
-  float temperature = UNSET_INTEGER;
+  int32_t uptime = UNSET_INTEGER;
+  int16_t co2 = UNSET_INTEGER;
+  int16_t pm1p0 = UNSET_INTEGER;
+  int16_t pm2p5 = UNSET_INTEGER;
+  int16_t pm10p0 = UNSET_INTEGER;
+  float temperature = UNSET_TEMPERATURE;
   float humidity = UNSET_INTEGER;
 };
 

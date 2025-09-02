@@ -43,6 +43,9 @@ uint16_t pmGet2p5() {
   log("pm2.5: ", false);
   log(String(pm2p5), false);
   log(" ug/m3");
+  if (pm2p5 == 0) {
+    return UNSET_INTEGER;
+  }
   return pm2p5;
 }
 
