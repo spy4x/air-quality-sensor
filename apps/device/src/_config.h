@@ -6,7 +6,7 @@
 
 // -------------------------------- FEATURE FLAGS
 
-#define SHOULD_LOG_TO_SERIAL true
+#define SHOULD_LOG_TO_SERIAL false
 
 // -------------------------------- NETWORK
 
