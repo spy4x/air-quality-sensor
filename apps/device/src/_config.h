@@ -32,7 +32,6 @@
 #define MHZ19E_SERIAL Serial2  // Serial2 on ESP32 - RX: 16 pin, TX: 17 pin
 
 // -------------------------------- TIMERS
-#define SENSORS_INITIAIL_WARM_UP_DELAY_MS 5 * 60 * 1000 // 5 minutes
 #define SENSORS_AFTER_SLEEP_WARM_UP_DELAY_MS 30 * 1000  // 30 seconds
 #define REPORT_INTERVAL_MS 10 * 60 * 1000               // 10 minutes
 

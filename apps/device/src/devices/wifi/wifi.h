@@ -7,6 +7,8 @@
 void wifiConnect();
 void wifiReconnect();
 void wifiDisconnect();
+void wifiPowerOff();
+void wifiWaitForConnection();
 bool wifiIsConnected();
 String wifiGetIP();
 String wifiGetSSID();

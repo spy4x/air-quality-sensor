@@ -72,6 +72,12 @@ void wifiWaitForConnection() {
 
 void wifiDisconnect() { WiFi.disconnect(true); }
 
+void wifiPowerOff() {
+  WiFi.disconnect(true);
+  WiFi.mode(WIFI_OFF);
+  log("WiFi powered off");
+}
+
 bool wifiIsConnected() { return WiFi.status() == WL_CONNECTED; }
 String wifiGetIP() { return WiFi.localIP().toString(); }
 String wifiGetSSID() { return WiFi.SSID(); }

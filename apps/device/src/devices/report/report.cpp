@@ -10,6 +10,9 @@ void report(SensorsValues values, TechInfo info) {
   static uint32_t reportIndex = 0;
   log(String("Free heap: ") + ESP.getFreeHeap());
   log(String("Start Report #") + reportIndex++);
+    // Connect WiFi for reporting
+    wifiConnect();
+    wifiWaitForConnection();
 
   static std::shared_ptr<SensorsValuesVector> vectorPtr = nullptr;
   if (vectorPtr == nullptr) {
@@ -56,4 +59,6 @@ void report(SensorsValues values, TechInfo info) {
     log(String("Report: Failed") + " " + postResponse.status + " " +
         postResponse.error);
   }
+    // Power off WiFi after reporting
+    wifiPowerOff();
 }
