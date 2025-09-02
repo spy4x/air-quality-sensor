@@ -10,7 +10,7 @@ void co2Setup() {
   delay(1000);
   co2Sensor.begin(co2SensorSerial);
   co2Sensor.autoCalibration();
-  co2Sensor.setRange(2000);
+  co2Sensor.setRange(10000);
 }
 
 uint16_t co2Get() {
