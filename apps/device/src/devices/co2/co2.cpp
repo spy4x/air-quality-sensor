@@ -19,6 +19,7 @@ uint16_t co2Get() {
   log(String(co2), false);
   log(" ppm");
   if (co2 == 0xFFFF || co2 == 0) { // 0xFFFF is often used for error, 0 is suspicious
+    log("co2: UNSET_INTEGER (error)");
     return UNSET_INTEGER;
   }
   return co2;
