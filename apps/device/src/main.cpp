@@ -18,6 +18,18 @@ TechInfo info;
 bool loopSensors();
 
 void setup() {
+  // Set CPU frequency to 80MHz for power saving
+  if (setCpuFrequencyMhz(80)) {
+    Serial.begin(115200);
+    Serial.println("CPU frequency set to 80 MHz");
+  } else {
+    Serial.begin(115200);
+    Serial.println("Failed to set CPU frequency. Defaulting to original speed.");
+  }
+  Serial.print("Current CPU frequency: ");
+  Serial.print(getCpuFrequencyMhz());
+  Serial.println(" MHz");
+
   loggerSetup();
   log("\n\n\nSetting sensors up...");
   pmSetup();
@@ -25,7 +37,7 @@ void setup() {
   tempHumidSetup();
   log("Setup complete");
 
-  log("Waiting before reading sensors (" + String(SENSORS_AFTER_SLEEP_WARM_UP_DELAY_MS / 1000) + " seconds)");
+  log("Warming up sensors (" + String(SENSORS_AFTER_SLEEP_WARM_UP_DELAY_MS / 1000) + " seconds)");
   delay(SENSORS_AFTER_SLEEP_WARM_UP_DELAY_MS);
 }
 
